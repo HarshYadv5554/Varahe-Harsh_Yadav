@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Election Data Visualization Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Indian General Election Data Dashboard (1991-2019)</h1>
+            <div class="filters">
+                <select id="yearFilter" onchange="updateAllCharts()">
+                    <option value="">All Years</option>
+                </select>
+                <select id="stateFilter" onchange="updateAllCharts()">
+                    <option value="">All States</option>
+                </select>
+                <select id="partyFilter" onchange="updateAllCharts()">
+                    <option value="">All Parties</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Party-wise Seat Share -->
+            <div class="chart-card">
+                <h2>Party-wise Seat Share</h2>
+                <canvas id="seatShareChart"></canvas>
+            </div>
+
+            <!-- State-wise Turnout Analysis -->
+            <div class="chart-card">
+                <h2>State-wise Turnout Analysis</h2>
+                <div id="turnoutMap" style="height: 400px;"></div>
+            </div>
+
+            <!-- Gender Representation -->
+            <div class="chart-card">
+                <h2>Gender Representation Over Time</h2>
+                <canvas id="genderChart"></canvas>
+            </div>
+
+            <!-- Top Parties by Vote Share -->
+            <div class="chart-card">
+                <h2>Top Parties by Vote Share (%)</h2>
+                <canvas id="voteShareChart"></canvas>
+            </div>
+
+            <!-- Margin of Victory Distribution -->
+            <div class="chart-card">
+                <h2>Margin of Victory Distribution</h2>
+                <canvas id="marginChart"></canvas>
+            </div>
+
+            <!-- Search by Candidate/Constituency -->
+            <div class="chart-card full-width">
+                <h2>Search by Candidate or Constituency</h2>
+                <div class="search-controls">
+                    <input type="text" id="candidateSearch" placeholder="Search Candidate...">
+                    <input type="text" id="constituencySearch" placeholder="Search Constituency...">
+                    <button onclick="searchCandidates()">Search</button>
+                </div>
+                <div class="table-container">
+                    <table id="searchTable">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>State</th>
+                                <th>Constituency</th>
+                                <th>Candidate</th>
+                                <th>Party</th>
+                                <th>Gender</th>
+                                <th>Votes</th>
+                                <th>Position</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Analytics Insights -->
+            <div class="chart-card full-width">
+                <h2>Key Insights & Analytics</h2>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>Highest Turnout State (Latest Election)</h3>
+                        <p id="highestTurnout">Loading...</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Women Candidates Percentage</h3>
+                        <p id="womenPercentage">Loading...</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Seat Changes (Last Two Elections)</h3>
+                        <div id="seatChanges">Loading...</div>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Narrowest Victory Margins</h3>
+                        <div id="narrowMargins">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- National vs Regional Parties -->
+            <div class="chart-card full-width">
+                <h2>National vs Regional Parties Vote Share Over Time</h2>
+                <canvas id="nationalVsRegionalChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>
+
