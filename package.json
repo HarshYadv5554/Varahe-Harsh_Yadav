@@ -1,0 +1,9 @@
+{
+  "name": "indian-election-dashboard",
+  "version": "1.0.0",
+  "description": "Indian Election Data Visualization Dashboard",
+  "engines": {
+    "python": "3.9"
+  }
+}
+
