@@ -36,7 +36,11 @@ def load_template():
 @app.route('/static/<path:filename>')
 def static_files(filename):
     static_dir = os.path.join(BASE_DIR, 'static')
-    return send_from_directory(static_dir, filename)
+    try:
+        return send_from_directory(static_dir, filename)
+    except Exception as e:
+        print(f"Error serving static file {filename}: {e}")
+        return jsonify({'error': 'File not found'}), 404
 
 @app.route('/')
 def index():
